@@ -4,22 +4,30 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    [SerializeField] float speed = 4f;
-    private Vector3 targetPosition;
+    [SerializeField] Animator animator;
+    [SerializeField] float moveSpeed = 4f;
+    [SerializeField] float rotateSpeed = 10f;
+
+
+    float stopDistance = .1f;
+    Vector3 targetPosition;
 
 
     private void Update()
     {
-        float stopDistance = .1f;
-        if(Vector3.Distance(targetPosition, transform.position) > stopDistance)
+        if (Vector3.Distance(targetPosition, transform.position) > stopDistance)
         {
             Vector3 direction = (targetPosition - transform.position).normalized;
-            transform.position += direction * Time.deltaTime * speed;
+            transform.position += direction * Time.deltaTime * moveSpeed;
+            transform.forward = Vector3.Lerp(transform.forward, direction, Time.deltaTime * rotateSpeed);
+
+            animator.SetBool("IsWalking", true);
         }
+        else { animator.SetBool("IsWalking", false); }
 
         if (Input.GetMouseButtonDown(0))
         {
-            Move(new Vector3(2, 0, 10));
+            Move(MouseWorld.GetPosition());
         }
     }
 
