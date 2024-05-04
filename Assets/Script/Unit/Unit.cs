@@ -8,10 +8,13 @@ public class Unit : MonoBehaviour
     [SerializeField] float moveSpeed = 4f;
     [SerializeField] float rotateSpeed = 10f;
 
-
     float stopDistance = .1f;
     Vector3 targetPosition;
 
+    private void Awake()
+    {
+        targetPosition = transform.position;
+    }
 
     private void Update()
     {
@@ -25,13 +28,9 @@ public class Unit : MonoBehaviour
         }
         else { animator.SetBool("IsWalking", false); }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            Move(MouseWorld.GetPosition());
-        }
     }
 
-    void Move(Vector3 targetPosition)
+    public void Move(Vector3 targetPosition)
     {
         this.targetPosition = targetPosition;
     }
