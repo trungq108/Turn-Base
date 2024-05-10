@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    GridPosition currentGridPosition;
-    [SerializeField] MoveAction moveAction;
+    GridPosition currentGridPosition; public GridPosition GetGridPosition() => currentGridPosition;
+    [SerializeField] MoveAction moveAction; public MoveAction GetMoveAction() => moveAction;
+
 
     private void Start()
     {
@@ -22,7 +23,5 @@ public class Unit : MonoBehaviour
             currentGridPosition = nextGridPos;
         }
     }
-
-    public MoveAction GetMoveAction() => moveAction;
 
 }

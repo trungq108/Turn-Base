@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UnitActionManager : MonoBehaviour
@@ -21,7 +22,12 @@ public class UnitActionManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             if (HandleSelecUnit()) return;
-            selectUnit.GetMoveAction().Move(MouseWorld.GetPosition());
+
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+            if(selectUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
+            {
+                selectUnit.GetMoveAction().Move(mouseGridPosition);
+            }
         }
     }
 
