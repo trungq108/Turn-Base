@@ -10,11 +10,8 @@ public class LevelGrid : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else { Destroy(this); }
+        if (Instance == null) Instance = this;
+        else Destroy(this);
 
         gridSystem = new GridSystem(20, 10, 2);
         gridSystem.CreateDebugObjects(debugPrefab);
@@ -55,4 +52,6 @@ public class LevelGrid : MonoBehaviour
         return grid.HasAnyUnit();
     }
 
+    public int GetWidth() => gridSystem.GetWidth();
+    public int GetHeight() => gridSystem.GetHeight();
 }

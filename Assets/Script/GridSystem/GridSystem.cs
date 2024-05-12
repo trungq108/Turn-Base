@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class GridSystem
 {   
-    int width;
-    int height;
+    int width; public int GetWidth() => width;
+    int height; public int GetHeight() => height;
     int cellSize;
     Grid[,] gridArray;
 

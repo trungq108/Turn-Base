@@ -5,8 +5,15 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     GridPosition currentGridPosition; public GridPosition GetGridPosition() => currentGridPosition;
-    [SerializeField] MoveAction moveAction; public MoveAction GetMoveAction() => moveAction;
+    MoveAction moveAction; public MoveAction GetMoveAction() => moveAction;
+    SpinAction spinAction; public SpinAction GetSpinAction() => spinAction;
 
+
+    private void Awake()
+    {
+        moveAction = GetComponent<MoveAction>();
+        spinAction = GetComponent<SpinAction>();
+    }
 
     private void Start()
     {
