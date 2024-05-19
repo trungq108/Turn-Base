@@ -6,6 +6,7 @@ using UnityEngine;
 public class UnitActionManager : MonoBehaviour
 {
     [SerializeField] Unit selectUnit; public Unit SelectUnit {  get { return selectUnit; } }
+    bool isBusy;
 
     public static UnitActionManager Instance {  get; private set; }
     private void Awake()
@@ -19,22 +20,36 @@ public class UnitActionManager : MonoBehaviour
 
     void Update()
     {
+        if (isBusy) return;
+
         if (Input.GetMouseButtonDown(0))
-        {
+        {           
             if (HandleSelecUnit()) return;
 
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
             if(selectUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
             {
-                selectUnit.GetMoveAction().Move(mouseGridPosition);
+                SetBusy();
+                selectUnit.GetMoveAction().Move(mouseGridPosition, ClearBusy);
             }
         }
 
         if(Input.GetMouseButtonUp(1))
         {
-            selectUnit.GetSpinAction().Spin();
+            SetBusy();
+            selectUnit.GetSpinAction().Spin(ClearBusy);
         }
     }
+
+    private void SetBusy()
+    {
+        isBusy = true;
+    }
+    private void ClearBusy()
+    {
+        isBusy = false;
+    }
+
 
     private bool HandleSelecUnit()
     {

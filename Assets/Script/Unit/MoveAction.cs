@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -32,17 +33,19 @@ public class MoveAction : BaseAction
             animator.SetBool("IsWalking", true);
         }
         else
-        { 
+        {
             animator.SetBool("IsWalking", false); 
             isActive = false;
+            onActionComplete();
         }
         transform.forward = Vector3.Lerp(transform.forward, direction, Time.deltaTime * rotateSpeed);
     }
 
-    public void Move(GridPosition gridPosition)
+    public void Move(GridPosition gridPosition, Action onActionComplete)
     {
-        this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+        this.onActionComplete = onActionComplete;
         isActive = true;
+        this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
     }
 
     public bool IsValidActionGridPosition(GridPosition gridPosition)
